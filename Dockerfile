@@ -1,17 +1,17 @@
 # Stage 1: Build React Frontend
-FROM node:18-alpine AS frontend-builder
+FROM node:20-alpine AS frontend-builder
 WORKDIR /usr/src/app/frontend
 COPY frontend/package*.json ./
-RUN npm ci
+RUN npm install
 COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Assemble Full-Stack Application
-FROM node:18-alpine
+FROM node:20-alpine
 WORKDIR /usr/src/app
-COPY backend/package*.json ./
-RUN npm ci --only=production
-COPY backend/ ./
+COPY backend/package*.json ./backend/
+RUN cd backend && npm install --omit=dev
+COPY backend/ ./backend/
 
 # Copy built static frontend files into expected relative path from backend/src/server.js (../../frontend/dist -> /usr/src/app/frontend/dist)
 COPY --from=frontend-builder /usr/src/app/frontend/dist ./frontend/dist

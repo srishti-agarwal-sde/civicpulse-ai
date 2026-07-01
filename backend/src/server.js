@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const connectDB = async () => {
   // Config loader
@@ -193,9 +194,17 @@ const PORT = process.env.PORT || 5000;
 
 // Start Server after DB Connection
 const startServer = async () => {
-  await connectDB();
-  await seedBadges();
-  await cleanExistingAddresses();
+  try {
+    await connectDB();
+    if (mongoose.connection.readyState === 1) {
+      await seedBadges();
+      await cleanExistingAddresses();
+    } else {
+      console.warn('Database is not connected. Seeding and migration skipped on boot.');
+    }
+  } catch (err) {
+    console.error('Database connection or seeding failed on startup:', err.message);
+  }
   
   app.listen(PORT, () => {
     console.log(`CivicPulse AI Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);

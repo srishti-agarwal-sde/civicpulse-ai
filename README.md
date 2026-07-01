@@ -1,5 +1,7 @@
 # CivicPulse AI
 
+🚀 **Live Production URL:** [https://civicpulse-ai-219290421637.us-central1.run.app/dashboard](https://civicpulse-ai-219290421637.us-central1.run.app/dashboard)
+
 > "Measuring the health of communities through citizen-powered intelligence."
 
 CivicPulse AI is an AI-powered Civic Intelligence Platform designed to help local communities detect, validate, prioritize, and resolve civic infrastructure hazards and municipal issues before they escalate into crises.
