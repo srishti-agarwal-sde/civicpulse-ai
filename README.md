@@ -10,6 +10,43 @@ The platform integrates geospatial maps, citizen reporting consensus mechanisms,
 
 ---
 
+## App Screenshots & Preview
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <b>🚀 Landing Welcome Portal</b><br/>
+      <img src="screenshots/landingPage.png" alt="CivicPulse AI Landing Page" width="100%"/>
+    </td>
+    <td width="50%" align="center">
+      <b>📊 Citizen Analytics Dashboard</b><br/>
+      <img src="screenshots/citizenDashboard.png" alt="CivicPulse AI Dashboard" width="100%"/>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <b>📝 Report New Issue Form</b><br/>
+      <img src="screenshots/reportNewIssueForm.png" alt="CivicPulse AI Report Form" width="100%"/>
+    </td>
+    <td width="50%" align="center">
+      <b>🔍 Reported Issue Detail Page</b><br/>
+      <img src="screenshots/reportedIssueDetails.png" alt="CivicPulse AI Detail Page" width="100%"/>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <b>🗺️ Geospatial Proximity Map</b><br/>
+      <img src="screenshots/geospatialMapGrid.png" alt="CivicPulse AI Geospatial Map" width="100%"/>
+    </td>
+    <td width="50%" align="center">
+      <b>🏆 Gamification Leaderboard & Badges</b><br/>
+      <img src="screenshots/leaderboardScreen.png" alt="CivicPulse AI Leaderboard" width="100%"/>
+    </td>
+  </tr>
+</table>
+
+---
+
 ## Technical Architecture
 
 ```
@@ -68,6 +105,7 @@ GOOGLE_APPLICATION_CREDENTIALS=path-to-service-account-key.json
 ## Quick Start (Local Development)
 
 ### 1. Boot Backend:
+
 ```bash
 cd backend
 npm install
@@ -75,11 +113,13 @@ npm run dev
 ```
 
 ### 2. Boot Frontend:
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
 Open browser at `http://localhost:5173`. Register a user with role **Administrator** to access moderator tabs.
 
 ---
@@ -89,8 +129,10 @@ Open browser at `http://localhost:5173`. Register a user with role **Administrat
 ### Authentication Routes
 
 #### `POST /api/auth/register`
+
 Creates user profile.
-* **Body:**
+
+- **Body:**
   ```json
   {
     "name": "Jane Doe",
@@ -99,26 +141,30 @@ Creates user profile.
     "role": "citizen"
   }
   ```
-* **Response:** User data with JWT token.
+- **Response:** User data with JWT token.
 
 #### `POST /api/auth/login`
+
 Authenticates credentials.
-* **Body:**
+
+- **Body:**
   ```json
   {
     "email": "jane@example.com",
     "password": "securepassword"
   }
   ```
-* **Response:** User profile metadata and JWT authorization token.
+- **Response:** User profile metadata and JWT authorization token.
 
 ---
 
 ### Incident & Evidence Routes
 
 #### `POST /api/issues` (Auth Required)
+
 Submits a new civic report. Send parameters as `multipart/form-data`.
-* **Form Parameters:**
+
+- **Form Parameters:**
   - `title`: String
   - `description`: String
   - `category`: String
@@ -126,7 +172,7 @@ Submits a new civic report. Send parameters as `multipart/form-data`.
   - `lat`: Number
   - `lng`: Number
   - `media`: File Attachment (image/video)
-* **Response (AI Generated):**
+- **Response (AI Generated):**
   ```json
   {
     "success": true,
@@ -141,26 +187,33 @@ Submits a new civic report. Send parameters as `multipart/form-data`.
   ```
 
 #### `GET /api/issues/check-duplicate` (Auth Required)
+
 Checks proximity parameters before submission.
-* **Query Parameters:** `lat`, `lng`, `category`, `description`
-* **Response:** Array of nearby issues with distance in meters and similarity scores.
+
+- **Query Parameters:** `lat`, `lng`, `category`, `description`
+- **Response:** Array of nearby issues with distance in meters and similarity scores.
 
 #### `POST /api/issues/:id/evidence` (Auth Required)
+
 Upload additional file attachment.
-* **Parameters:** `media` (File), `explanation` (Text)
-* **Response:** Media details with AI relevance assessment (`Relevant`, `Possibly Relevant`, `Unrelated`).
+
+- **Parameters:** `media` (File), `explanation` (Text)
+- **Response:** Media details with AI relevance assessment (`Relevant`, `Possibly Relevant`, `Unrelated`).
 
 ---
 
 ### Consensus & Gamification Routes
 
 #### `POST /api/validation/:id/confirm` (Auth Required)
+
 Confirm incident existence. Awards validator +10 points, reporter +15 points.
 
 #### `POST /api/validation/:id/upvote` (Auth Required)
+
 Upvote priority. Awards +5 points.
 
 #### `POST /api/validation/:id/resolve` (Auth Required)
+
 Mark resolved (consensus at 3 votes or immediate admin resolve). Awards reporter +50 points.
 
 ---
@@ -168,16 +221,21 @@ Mark resolved (consensus at 3 votes or immediate admin resolve). Awards reporter
 ## Google Cloud Platform (GCP) Deployment
 
 ### 1. Deploy Express Backend to Google Cloud Run
+
 Build the container and deploy to Cloud Run:
+
 ```bash
 cd backend
 gcloud builds submit --tag gcr.io/your-project-id/civicpulse-backend
 gcloud run deploy civicpulse-backend --image gcr.io/your-project-id/civicpulse-backend --platform managed --allow-unauthenticated
 ```
+
 Update server environment variables (`GEMINI_API_KEY`, `MONGODB_URI`) in the Cloud Run Console.
 
 ### 2. Deploy React Frontend to Firebase Hosting
+
 Build static files and deploy:
+
 ```bash
 cd frontend
 npm run build
