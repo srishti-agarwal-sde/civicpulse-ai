@@ -1,6 +1,6 @@
 # CivicPulse AI
 
-🚀 **Live Production URL:** [https://civicpulse-ai-219290421637.us-central1.run.app/dashboard](https://civicpulse-ai-219290421637.us-central1.run.app)
+🚀 **Live Production URL:** [https://civicpulse-ai-219290421637.us-central1.run.app](https://civicpulse-ai-219290421637.us-central1.run.app)
 
 > "Measuring the health of communities through citizen-powered intelligence."
 
